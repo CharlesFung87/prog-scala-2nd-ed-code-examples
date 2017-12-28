@@ -97,7 +97,13 @@ object AkkaClient {                                                  // <1>
     |""".stripMargin
 
   private def exit(message: String, status: Int): Nothing = {        // <20>
-    for (sys <- system) sys.shutdown()
+    //scala 2.12 migration
+	//for (sys <- system) sys.shutdown()
+	import scala.concurrent.ExecutionContext.Implicits.global
+	for (sys <- system) {sys.terminate().foreach { _ =>
+      println("Actor system was shut down")
+      }
+	}
     println(message)
     sys.exit(status)
   }

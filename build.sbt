@@ -4,27 +4,43 @@ version := "2.1"
 
 organization := "org.programming-scala"
 
-scalaVersion := "2.11.7"
+//sbt 0.13.13 migration
+//scalaVersion := "2.11.7"
+scalaVersion := "2.12.0"
 
+//sbt 0.13.13 migration
 libraryDependencies ++= Seq(
-  "org.scala-lang.modules" %% "scala-async"     % "0.9.2",
-  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2",
-  "org.scala-lang.modules" %% "scala-xml"       % "1.0.2",
+  //"org.scala-lang.modules" %% "scala-async"     % "0.9.2",
+  "org.scala-lang.modules" %% "scala-async"     % "0.9.7",
+  //"org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.2",
+  "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.6",
+  //"org.scala-lang.modules" %% "scala-xml"       % "1.0.2",
+  "org.scala-lang.modules" %% "scala-xml"       % "1.0.6",
   "org.scala-lang"          % "scala-reflect"   % scalaVersion.value,
-  "com.typesafe.akka"      %% "akka-actor"      % "2.3.4",
-  "com.typesafe.akka"      %% "akka-slf4j"      % "2.3.4",
+  //"com.typesafe.akka"      %% "akka-actor"      % "2.3.4",
+  "com.typesafe.akka"      %% "akka-actor"      % "2.5.8",
+  //"com.typesafe.akka"      %% "akka-slf4j"      % "2.3.4",
+  "com.typesafe.akka"      %% "akka-slf4j"      % "2.5.8",
   "ch.qos.logback"          % "logback-classic" % "1.1.2",
-  "org.scalaz"             %% "scalaz-core"     % "7.1.0",
-  "org.scalacheck"         %% "scalacheck"      % "1.12.5" % "test",
-  "org.scalatest"          %% "scalatest"       % "2.2.4"  % "test",
-  "org.specs2"             %% "specs2"          % "2.4"    % "test",
+  //"org.scalaz"             %% "scalaz-core"     % "7.1.0",
+  "org.scalaz"             %% "scalaz-core"     % "7.2.18",
+  //"org.scalacheck"         %% "scalacheck"      % "1.12.5" % "test",
+  "org.scalacheck"         %% "scalacheck"      % "1.13.5" % "test",
+  //"org.scalatest"          %% "scalatest"       % "2.2.4"  % "test",
+  "org.scalatest"          %% "scalatest"       % "3.0.4"  % "test",
+  //"org.specs2"             %% "specs2"          % "2.4"    % "test",
+  "org.specs2"             %% "specs2-core"     % "4.0.1" % "test",
+
   // JUnit is used for some Java interop. examples. A driver for JUnit:
   "junit"                   % "junit-dep"       % "4.10"   % "test",
   "com.novocode"            % "junit-interface" % "0.10"   % "test"
 )
 
 scalacOptions ++= Seq(
-  "-encoding", "UTF-8", "-optimise",
+  "-encoding", "UTF-8", 
+  //sbt 0.13.13 migration
+  //"-optimise",
+  "-opt:l:classpath",
   "-deprecation", "-unchecked", "-feature", "-Xlint",
   "-Ywarn-infer-any", // Nice, but hard to eliminate these warnings: "-Ywarn-value-discard")
   "-language:experimental.macros")

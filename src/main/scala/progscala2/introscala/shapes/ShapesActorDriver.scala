@@ -29,7 +29,11 @@ class ShapesDrawingDriver(drawerActor: ActorRef) extends Actor {     // <5>
       drawerActor ! Exit
     case Finished =>                                                 // <7>
       println(s"ShapesDrawingDriver: cleaning up...")
-      context.system.shutdown()
+       //scala 2.12 migration
+	  import scala.concurrent.ExecutionContext.Implicits.global
+      context.system.terminate().foreach { _ =>
+        println("Actor system was shut down")
+      }
     case response: Response =>                                       // <8>
       println("ShapesDrawingDriver: Response = " + response)
     case unexpected =>                                               // <9>

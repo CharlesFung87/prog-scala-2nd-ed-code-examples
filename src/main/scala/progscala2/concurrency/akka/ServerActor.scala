@@ -37,7 +37,9 @@ class ServerActor extends Actor with ActorLogging {                  // <1>
   val processRequests: Receive = {                                   // <7>
     case c @ Crash(n) => workers(n % workers.size) ! c
     case DumpAll =>                                                  // <8>
-      Future.fold(workers map (_ ? DumpAll))(Vector.empty[Any])(_ :+ _)
+      //scala 2.12 migration
+	  //Future.fold(workers map (_ ? DumpAll))(Vector.empty[Any])(_ :+ _)
+	  Future.foldLeft(workers map (_ ? DumpAll))(Vector.empty[Any])(_ :+ _)
         .onComplete(askHandler("State of the workers"))
     case Dump(n) => 
       (workers(n % workers.size) ? DumpAll).map(Vector(_))
